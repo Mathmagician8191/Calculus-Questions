@@ -1,91 +1,87 @@
-from math import e, log, sin, cos
-from sympy import sympify, Symbol, limit, diff, collect, trigsimp
-from random import random, normalvariate, choices
+from sympy import sympify, Symbol, limit, diff, collect, trigsimp, init_printing, pprint, latex, oo, zoo, nan #imports key sympy functions
+from sympy.functions.elementary.trigonometric import sin, cos, tan, sec, csc, cot #imports all needed trig functions
+from sympy.functions.elementary.exponential import exp, log #exponential functions
+from random import random, normalvariate, choices #for randomness of function generation
+#import matplotlib.pyplot as latex_print #for output of latex
 
-x = Symbol("x", real=True)
+x = Symbol("x", real=True) #complex numbers will not be used
+
+def interior(terms, cascade, level3):
+    if random() < cascade and terms > 1:
+        return "(" + generate(terms - 1, cascade, level3) + ")"
+    else: return "(x)"
 
 def generate(terms=4, cascade=0.3, level3=False):
-    function = ""
-    while random() > (1/terms) or function == "":
-        coefficient = False
+    """
+    Generates a random function.
+    
+    Terms influences the chance to add an extra term to the function.
+    Cascade is the chance to use a function as an argument.
+    Level 3 controls whether or not functions seen only at Level 3 are shown
+    """
+    function = "" #function is initially empty
+    while random() > (1/terms) or function == "": #the function cannot be blank
+        
+        #adds a coefficient
         value = int(normalvariate(1,3))
-        if value < 0:
-            function = function[:-1] + "-"
-            value = abs(value)
-        if value == 0:
-            continue
-        elif value == 1:
-            pass
-        else:
-            function += str(value) + "*"
-            coefficient = True
+        function += str(value) + "*"
+        
+        #give options for functions - other trig functions will be added
         if level3:
             options = ["poly", "exp", "log", "sin", "cos", "prod", "quot"]
             weights = [0.5, 0.1, 0.1, 0.1, 0.1, 0.05, 0.05]
             option = choices(options, weights)[0]
         else:
             option = "poly"
+        
+        #polynomial
         if option == "poly":
             exponent = int(normalvariate(1.5,2))
-            if exponent == 0:
-                if coefficient:
-                    function = function[:-1]
-                else: function += "1"
-            elif random() < cascade and terms > 1:
-                function += "(" + generate(terms-1, cascade, level3) + ")"
-            else: function += "x"
-            if exponent not in [0,1]:
-                function += "**" + str(exponent)
+            function += interior(terms, cascade, level3) + "**" + str(exponent)
+        
+        #exponential function
         elif option == "exp":
-            function += "e**"
-            if random() < cascade and terms >1:
-                function += "(" + generate(terms-1, cascade, level3) + ")"
-            else:
-                function += "x"
+            function += "exp" + interior(terms, cascade, level3)
+        
+        #log function
         elif option == "log":
-            function += "log("
-            if random() < cascade and terms >1:
-                function += generate(terms-1, cascade, level3) + ")"
-            else:
-                function += "x)"
+            function += "log" + interior(terms, cascade, level3)
+        
+        #sin function
         elif option == "sin":
-            function += "sin("
-            if random() < cascade and terms >1:
-                function += generate(terms-1, cascade, level3) + ")"
-            else:
-                function += "x)"
+            function += "sin" + interior(terms, cascade, level3)
+        
+        #cos function
         elif option == "cos":
-            function += "cos("
-            if random() < cascade and terms >1:
-                function += generate(terms-1, cascade, level3) + ")"
-            else: function += "x)"
+            function += "cos" + interior(terms, cascade, level3)
+        
+        #product of two functions
         elif option == "prod":
-            if random() < cascade and terms > 1:
-                left = "(" + generate(terms-1, cascade, level3) + ")"
-            else: left = "x"
-            if random() < cascade and terms > 1:
-                right = "(" + generate(terms-1, cascade, level3) + ")"
-            else: right = "x"
+            left = interior(terms, cascade, level3)
+            right = interior(terms, cascade, level3)
             function += left + "*" + right
+        
+        #quotient of two functions
         elif option == "quot":
-            if random() < cascade and terms > 1:
-                left = "(" + generate(terms-1, cascade, level3) + ")"
-            else: left = "x"
-            if random() < cascade and terms > 1:
-                right = "(" + generate(terms-1, cascade, level3) + ")"
-            else: right = "x"
+            left = interior(terms, cascade, level3)
+            right = interior(terms, cascade, level3)
             function += left + "/" + right
+
+        #add a + for the next term
         function += "+"
-    return function[:-1]
+    return function[:-1] #the function has a trailing +
 
-def value(function, x):
-    return eval(function)
-
-def gradient(function, x, gap=8**-7):
-    return (value(function, x+gap) - value(function, x-gap)/(2 * gap))
-
-while True:
-    function = collect(sympify(generate(5, 0.35, True)), x)
+while True: #generates functions for testing purposes
+    function = nan
+    while function.has(oo, -oo, zoo, nan) or function == 0:
+        string = generate(3, 0.35, True)
+        function = collect(sympify(string), x)
+    pprint(function)
     print(function)
+    print(string)
+    #tex = latex(function)
+    #latex_print.plot()
+    #latex_print.text(0, 0, "$%s$"%tex)
+    #latex_print.show()
     input("")
 
