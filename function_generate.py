@@ -1,4 +1,4 @@
-from sympy import sympify, Symbol, limit, diff, collect, trigsimp, init_printing, pprint, latex, oo, zoo, nan #imports key sympy functions
+from sympy import sympify, Symbol, limit, diff, collect, trigsimp, init_printing, pprint, latex, oo, zoo, nan, I, pi #imports key sympy functions
 from sympy.functions.elementary.trigonometric import sin, cos, tan, sec, csc, cot #imports all needed trig functions
 from sympy.functions.elementary.exponential import exp, log #exponential functions
 from random import random, normalvariate, choices #for randomness of function generation
@@ -73,11 +73,13 @@ def generate(terms=4, cascade=0.3, level3=False):
 
 while True: #generates functions for testing purposes
     function = nan
-    while function.has(oo, -oo, zoo, nan) or function == 0:
+    while function.has(oo, -oo, zoo, nan, I) or function == 0 or not(function.has("x")):
         string = generate(3, 0.35, True)
-        function = collect(sympify(string), x)
+        collected = collect(sympify(string), x)
+        function = trigsimp(collected)
     pprint(function)
     print(function)
+    print(collected)
     print(string)
     #tex = latex(function)
     #latex_print.plot()
