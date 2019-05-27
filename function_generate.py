@@ -1,4 +1,4 @@
-from sympy import sympify, Symbol, limit, diff, collect, trigsimp, init_printing, pprint, latex, oo, zoo, nan, I, pi #imports key sympy functions
+from sympy import sympify, Symbol, limit, diff, collect, trigsimp, simplify, init_printing, pprint, latex, oo, zoo, nan, I, pi #imports key sympy functions
 from sympy.functions.elementary.trigonometric import sin, cos, tan, sec, csc, cot #imports all needed trig functions
 from sympy.functions.elementary.exponential import exp, log #exponential functions
 from random import random, normalvariate, choices #for randomness of function generation
