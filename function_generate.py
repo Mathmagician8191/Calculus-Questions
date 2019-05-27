@@ -2,7 +2,7 @@ from sympy import sympify, Symbol, limit, diff, collect, trigsimp, init_printing
 from sympy.functions.elementary.trigonometric import sin, cos, tan, sec, csc, cot #imports all needed trig functions
 from sympy.functions.elementary.exponential import exp, log #exponential functions
 from random import random, normalvariate, choices #for randomness of function generation
-#import matplotlib.pyplot as latex_print #for output of latex
+import matplotlib.pyplot as latex_print #for output of latex
 
 x = Symbol("x", real=True) #complex numbers will not be used
 
@@ -76,14 +76,14 @@ while True: #generates functions for testing purposes
     while function.has(oo, -oo, zoo, nan, I) or function == 0 or not(function.has("x")):
         string = generate(3, 0.35, True)
         collected = collect(sympify(string), x)
-        function = trigsimp(collected)
-    pprint(function)
-    print(function)
-    print(collected)
-    print(string)
-    #tex = latex(function)
-    #latex_print.plot()
-    #latex_print.text(0, 0, "$%s$"%tex)
-    #latex_print.show()
+        function = simplify(collected)
+        trig = trigsimp(collected)
+    y = 2
+    for item in collected, trig, function:
+        tex = latex(item)
+        latex_print.plot()
+        latex_print.text(0, y, "$%s$"%tex)
+        latex_print.show()
+        y -= 1
     input("")
 
