@@ -83,7 +83,7 @@ while True: #generates functions for testing purposes
         tex = latex(item)
         latex_print.plot()
         latex_print.text(0, y, "$%s$"%tex)
-        latex_print.show()
         y -= 1
+    latex_print.show()
     input("")
 
