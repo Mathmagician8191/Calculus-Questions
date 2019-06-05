@@ -1,4 +1,4 @@
-from sympy import sympify, Symbol, limit, diff, collect, trigsimp, simplify, init_printing, pprint, latex, oo, zoo, nan, I, pi #imports key sympy functions
+from sympy import sympify, Symbol, limit, diff, collect, simplify, init_printing, pprint, latex, oo, zoo, nan, I, pi #imports key sympy functions
 from sympy.functions.elementary.trigonometric import sin, cos, tan, sec, csc, cot #imports all needed trig functions
 from sympy.functions.elementary.exponential import exp, log #exponential functions
 from random import random, normalvariate, choices #for randomness of function generation
@@ -71,19 +71,19 @@ def generate(terms=4, cascade=0.3, level3=False):
         function += "+"
     return function[:-1] #the function has a trailing +
 
-while True: #generates functions for testing purposes
+y = 10
+while y >= 0: #generates functions for testing purposes
     function = nan
+    attempts = 0
     while function.has(oo, -oo, zoo, nan, I) or function == 0 or not(function.has("x")):
+        attempts += 1
         string = generate(3, 0.35, True)
         collected = collect(sympify(string), x)
         function = simplify(collected)
-        trig = trigsimp(collected)
-    y = 2
-    for item in collected, trig, function:
-        tex = latex(item)
-        latex_print.plot()
-        latex_print.text(0, y, "$%s$"%tex)
-        y -= 1
-    latex_print.show()
-    input("")
+    print("Function found! Candidates: " + str(attempts))
+    tex = latex(function)
+    latex_print.plot()
+    latex_print.text(0, y, "$%s$"%tex)
+    y -= 1
+latex_print.show()
 
