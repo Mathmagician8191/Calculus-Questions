@@ -25,10 +25,10 @@ def generate(terms=4, cascade=0.3, level3=False):
         coefficient = int(normalvariate(1,3))
         function += str(coefficient) + "*"
         
-        #give options for functions - other trig functions will be added
+        #give options for functions
         if level3:
-            options = ["poly", "exp", "log", "sin", "cos", "prod", "quot"]
-            weights = [0.5, 0.1, 0.1, 0.1, 0.1, 0.05, 0.05]
+            options = ["poly", "exp", "log", "sin", "cos", "tan", "sec", "csc", "cot", "prod", "quot"]
+            weights = [0.3, 0.1, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
             option = choices(options, weights)[0]
         else:
             option = "poly"
@@ -38,21 +38,9 @@ def generate(terms=4, cascade=0.3, level3=False):
             exponent = int(normalvariate(1.5,2))
             function += interior(terms, cascade, level3) + "**" + str(exponent)
         
-        #exponential function
-        elif option == "exp":
-            function += "exp" + interior(terms, cascade, level3)
-        
-        #log function
-        elif option == "log":
-            function += "log" + interior(terms, cascade, level3)
-        
-        #sin function
-        elif option == "sin":
-            function += "sin" + interior(terms, cascade, level3)
-        
-        #cos function
-        elif option == "cos":
-            function += "cos" + interior(terms, cascade, level3)
+        #miscellaneous function
+        elif option in ["exp", "log", "sin", "cos", "tan", "sec", "csc", "cot"]:
+            function += option + interior(terms, cascade, level3)
         
         #product of two functions
         elif option == "prod":
