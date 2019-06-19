@@ -21,10 +21,9 @@ def generate(terms=4, cascade=0.3, level3=False):
     """
     function = "" #function is initially empty
     while random() > (1/terms) or function == "": #the function cannot be blank
-        
         #adds a coefficient
-        value = int(normalvariate(1,3))
-        function += str(value) + "*"
+        coefficient = int(normalvariate(1,3))
+        function += str(coefficient) + "*"
         
         #give options for functions - other trig functions will be added
         if level3:
