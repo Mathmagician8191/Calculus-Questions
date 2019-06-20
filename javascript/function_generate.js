@@ -28,9 +28,43 @@ function generate(terms=4, cascade=0.3, level3=False) {
       for (var i=0; i < 11; i++) {
         if (weights[i] > rand) {
           var option = options[i];
+          break;
         }
       }
     }
+    else {var option = "poly"}
+    switch (option) {
+      //polynomial
+      case "poly":
+        var exponent = Math.floor(normal({mean: 1.5, dev: 2}));
+        function += interior(terms, cascade, level3) + "**" + exponent.toString();
+        break;
+      //miscellaneous functions
+      case "exp":
+      case "log":
+      //trig functions
+      case "sin":
+      case "cos":
+      case "tan":
+      case "sec":
+      case "csc":
+      case "cot":
+        function += option + interior(terms, cascade, level3);
+        break;
+      //product of two functions
+      case prod:
+        left = interior(terms, cascade, level3);
+        right = interior(terms, cascade, level3);
+        function += left + "*" + right;
+        break;
+      //quotient of two functions
+      case quot:
+        left = interior(terms, cascade, level3);
+        right = interior(terms, cascade, level3);
+        function += left + "/" + right;
+        break;
+    }
+    function += "+"
   }
-  return function;
+  return function[:-1];
 }
