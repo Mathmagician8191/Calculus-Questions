@@ -14,11 +14,11 @@ function generate(terms=4, cascade=0.3, level3=False) {
     * Cascade is the chance to use a function as an argument
     * Level 3 controls whether Level 3 functions are used.
     */
-  var function = "";
+  var func = "";
   while (Math.random() > (1/terms) || function == "") {
     //adds a coefficient
     var coefficient = Math.floor(normal({mean: 1, dev: 3}));
-    function += coefficient.toString() + "*";
+    func += coefficient.toString() + "*";
     
     //give options for functions
     if (level3) {
@@ -37,7 +37,7 @@ function generate(terms=4, cascade=0.3, level3=False) {
       //polynomial
       case "poly":
         var exponent = Math.floor(normal({mean: 1.5, dev: 2}));
-        function += interior(terms, cascade, level3) + "**" + exponent.toString();
+        func += interior(terms, cascade, level3) + "**" + exponent.toString();
         break;
       //miscellaneous functions
       case "exp":
@@ -49,22 +49,22 @@ function generate(terms=4, cascade=0.3, level3=False) {
       case "sec":
       case "csc":
       case "cot":
-        function += option + interior(terms, cascade, level3);
+        func += option + interior(terms, cascade, level3);
         break;
       //product of two functions
       case prod:
         left = interior(terms, cascade, level3);
         right = interior(terms, cascade, level3);
-        function += left + "*" + right;
+        func += left + "*" + right;
         break;
       //quotient of two functions
       case quot:
         left = interior(terms, cascade, level3);
         right = interior(terms, cascade, level3);
-        function += left + "/" + right;
+        func += left + "/" + right;
         break;
     }
-    function += "+"
+    func += "+"
   }
-  return function[:-1];
+  return func[:-1];
 }
