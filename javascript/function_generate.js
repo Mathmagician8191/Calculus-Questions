@@ -1,5 +1,3 @@
-var normal = require("random-normal");
-
 function interior(terms, cascade, level3) {
   if (Math.random() < cascade && terms > 1) {
     return "(" + generate(terms - 1, cascade, level3) + ")";
@@ -16,7 +14,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
   var func = "";
   while (Math.random() > (1/terms) || func == "") {
     //adds a coefficient
-    var coefficient = Math.floor(normal({mean: 1, dev: 3}));
+    var coefficient = Math.floor(chance.normal({mean: 1, dev: 3}));
     func += coefficient.toString() + "*";
     
     //give options for functions
@@ -35,7 +33,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
     switch (option) {
       //polynomial
       case "poly":
-        var exponent = Math.floor(normal({mean: 1.5, dev: 2}));
+        var exponent = Math.floor(chance.normal({mean: 1.5, dev: 2}));
         func += interior(terms, cascade, level3) + "**" + exponent.toString();
         break;
       //miscellaneous functions
