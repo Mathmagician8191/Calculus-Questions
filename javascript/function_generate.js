@@ -34,7 +34,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
       //polynomial
       case "poly":
         var exponent = Math.floor(chance.normal({mean: 1.5, dev: 2}));
-        func += interior(terms, cascade, level3) + "**" + exponent.toString();
+        func += interior(terms, cascade, level3) + "^" + exponent.toString();
         break;
       //miscellaneous functions
       case "exp":
