@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="algebrite.js"></script>
+	<script src="chance.js"></script>
+	<script src="function_generate.js"></script>
+	<script>
+		function gen(num) {
+			for (var i=0; i<num; i++) {
+				result = "";
+				while (result == "") {
+					try {
+						result = Algebrite.simplify(generate()).toString()
+					}
+					catch (err) {
+						if (err.name != "Stop:") {
+							console.log(err.name)
+						}
+					}
+				}
+				document.body.innerHTML += result + "\n"
+			}
+		}
+	</script>
+</head>
+<body onload="gen(10)">
+</body>
+</html>
