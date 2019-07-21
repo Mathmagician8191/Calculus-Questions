@@ -4,6 +4,7 @@
 	<script src="algebrite.js"></script>
 	<script src="chance.js"></script>
 	<script src="function_generate.js"></script>
+	<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 	<script>
 		function gen(num) {
 			for (var i=0; i<num; i++) {
@@ -18,11 +19,11 @@
 						}
 					}
 				}
-				document.body.innerHTML += result + "\n"
+				document.body.innerHTML += Algebrite.run("printlatex(" + result + ")").toString() + "<br>"
 			}
 		}
 	</script>
 </head>
-<body onload="gen(5)">
+<body>
 </body>
 </html>
