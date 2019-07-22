@@ -14,13 +14,12 @@
 						result = Algebrite.simplify(generate()).toString()
 					}
 					catch (err) {
-						if (err.name != "Stop:") {
-							console.log(err.name)
-						}
+						console.log(err)
 					}
 				}
-				document.body.innerHTML += Algebrite.run("printlatex(" + result + ")").toString() + "<br>"
+				document.body.innerHTML += "\\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\)<br>"
 			}
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 		}
 	</script>
 </head>
