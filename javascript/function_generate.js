@@ -1,3 +1,5 @@
+var result
+
 function interior(terms, cascade, level3) {
   if (Math.random() < cascade && terms > 1) {
     return "(" + generate(terms - 1, cascade, level3) + ")";
@@ -65,3 +67,22 @@ function generate(terms=4, cascade=0.3, level3=false) {
   }
   return func.slice(0,-1);
 }
+
+function gen() {
+	result = "";
+	while (result == "") {
+		try {
+			result = Algebrite.simplify(generate()).toString()
+		}
+		catch (err) {
+			console.log(err)
+		}
+	}
+	document.body.innerHTML += "\\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\)<br>"
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+}
+
+function checkAnswer(derivative) {
+	return Algebrite.simplify(derivative) == Algebrite.run("d(" + result + ")")
+}
+generate()

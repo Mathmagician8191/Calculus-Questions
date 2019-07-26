@@ -3,26 +3,11 @@
 <head>
 	<script src="algebrite.js"></script>
 	<script src="chance.js"></script>
-	<script src="function_generate.js"></script>
+	<script src="function_generate.js?version=1.0.0"></script>
 	<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-	<script>
-		function gen(num) {
-			for (var i=0; i<num; i++) {
-				result = "";
-				while (result == "") {
-					try {
-						result = Algebrite.simplify(generate()).toString()
-					}
-					catch (err) {
-						console.log(err)
-					}
-				}
-				document.body.innerHTML += "\\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\)<br>"
-			}
-			MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-		}
-	</script>
 </head>
 <body>
+	<div id="latex"></div>
+	<input type="button" id="start" value="Start game!">
 </body>
 </html>
