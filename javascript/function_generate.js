@@ -78,7 +78,7 @@ function gen() {
 			console.log(err)
 		}
 	}
-	document.body.innerHTML += "\\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\)<br>"
+	document.getElementByID("latex").innerHTML += "\\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\)"
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
 
