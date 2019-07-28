@@ -14,7 +14,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
     * Level 3 controls whether Level 3 functions are used.
     */
   var func = "";
-  while (Math.random() > (1/terms) || func == "") {
+  while ((Math.random() > (1/terms) || func == "") && func.length < (terms*(1+Math.floor(level3)))/(1-cascade)) {
     //adds a coefficient
     var coefficient = Math.floor(chance.normal({mean: 1, dev: 3}));
     func += "(" + coefficient.toString() + ")*";
@@ -73,6 +73,9 @@ function gen() {
 	while (result == "") {
 		try {
 			result = Algebrite.simplify(generate()).toString()
+			if (result == 0) {
+				throw "Not a valid equation"
+			}
 		}
 		catch (err) {
 			console.log(err)
