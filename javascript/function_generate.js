@@ -1,4 +1,4 @@
-var result
+var result;
 
 function interior(terms, cascade, level3) {
   if (Math.random() < cascade && terms > 1) {
@@ -14,7 +14,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
     * Level 3 controls whether Level 3 functions are used.
     */
   var func = "";
-  while ((Math.random() > (1/terms) || func == "") && func.length < (terms*(1+Math.floor(level3)))/(1-cascade)) {
+  while ((Math.random() > (1/terms) || func == "") && func.length < 10*(terms*(1+Math.floor(level3)))/(1-cascade)) {
     //adds a coefficient
     var coefficient = Math.floor(chance.normal({mean: 1, dev: 3}));
     func += "(" + coefficient.toString() + ")*";
@@ -63,29 +63,45 @@ function generate(terms=4, cascade=0.3, level3=false) {
         func += left + "/" + right;
         break;
     }
-    func += "+"
+    func += "+";
   }
   return func.slice(0,-1);
 }
 
-function gen() {
+function gen(difficulty) {
+	document.getElementById("latex").innerHTML = "Loading...";
 	result = "";
 	while (result == "") {
 		try {
-			result = Algebrite.simplify(generate()).toString()
-			if (result == 0) {
-				throw "Not a valid equation"
+			result = Algebrite.simplify(generate()).toString();
+			if (result == "" || !(result.includes("x"))) {
+				result = "";
+				throw "Not a valid equation";
 			}
 		}
 		catch (err) {
-			console.log(err)
+			console.log(err);
 		}
 	}
-	document.getElementById("latex").innerHTML += "\\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\)"
+	document.getElementById("latex").innerHTML = "\\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\)";
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
 
 function checkAnswer(derivative) {
-	return Algebrite.simplify(derivative) == Algebrite.run("d(" + result + ")")
+	return Algebrite.simplify(derivative) == Algebrite.run("d(" + result + ")");
 }
-generate()
+
+function submit() {
+	answer = document.getElementById("answer").value;
+	correct = checkAnswer(answer);
+	switch (correct) {
+		case true:
+			alert("Correct!");
+		case false:
+			alert("Incorrect! The derivative was: " + Algebrite.run("d(" + result + ")").toString());
+	}
+	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
+	gen(difficulty);
+}
+
+generate();
