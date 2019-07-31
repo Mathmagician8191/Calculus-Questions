@@ -21,8 +21,8 @@ function generate(terms=4, cascade=0.3, level3=false) {
     
     //give options for functions
     if (level3) {
-      var options = ["poly", "exp", "log", "sin", "cos", "tan", "sec", "csc", "cot", "prod", "quot"];
-      var weights = [0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1];
+      var options = ["poly", "exp", "log", "sin", "cos", "tan", "prod", "quot"];
+      var weights = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 1];
       rand = Math.random();
       for (var i=0; i < 11; i++) {
         if (weights[i] > rand) {
@@ -51,13 +51,13 @@ function generate(terms=4, cascade=0.3, level3=false) {
         func += option + interior(terms, cascade, level3);
         break;
       //product of two functions
-      case prod:
+      case "prod":
         left = interior(terms, cascade, level3);
         right = interior(terms, cascade, level3);
         func += left + "*" + right;
         break;
       //quotient of two functions
-      case quot:
+      case "quot":
         left = interior(terms, cascade, level3);
         right = interior(terms, cascade, level3);
         func += left + "/" + right;
@@ -69,11 +69,33 @@ function generate(terms=4, cascade=0.3, level3=false) {
 }
 
 function gen(difficulty) {
+	switch (difficulty) {
+		case "level2":
+			terms = 3;
+			cascade = 0.05;
+			level3 = false;
+			break;
+		case "easy":
+			terms = 3;
+			cascade = 0.1;
+			level3 = true;
+			break;
+		case "medium":
+			terms = 4;
+			cascade = 0.25;
+			level3 = false;
+			break;
+		case "hard":
+			terms = 5;
+			cascade = 0.4;
+			level3 = true;
+			break;
+	}
 	document.getElementById("latex").innerHTML = "Loading...";
 	result = "";
 	while (result == "") {
 		try {
-			result = Algebrite.simplify(generate()).toString();
+			result = Algebrite.simplify(generate(terms, cascade, level3)).toString();
 			if (result == "" || !(result.includes("x"))) {
 				result = "";
 				throw "Not a valid equation";
@@ -92,15 +114,16 @@ function checkAnswer(derivative) {
 }
 
 function submit() {
-	answer = document.getElementById("answer").value;
+	box = document.getElementById("answer");
+	answer = box.value;
 	correct = checkAnswer(answer);
-	switch (correct) {
-		case true:
-			alert("Correct!");
-		case false:
-			alert("Incorrect! The derivative was: " + Algebrite.run("d(" + result + ")").toString());
+	if (correct == true) {
+		alert("Correct!");
 	}
+	else {alert("Incorrect! The derivative was: " + Algebrite.run("d(" + result + ")").toString())}
+	
 	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
+	box.value = "";
 	gen(difficulty);
 }
 
