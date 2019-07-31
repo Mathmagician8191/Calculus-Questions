@@ -45,9 +45,6 @@ function generate(terms=4, cascade=0.3, level3=false) {
       case "sin":
       case "cos":
       case "tan":
-      case "sec":
-      case "csc":
-      case "cot":
         func += option + interior(terms, cascade, level3);
         break;
       //product of two functions
