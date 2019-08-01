@@ -4,7 +4,7 @@ function interior(terms, cascade, level3) {
   if (Math.random() < cascade && terms > 1) {
     return "(" + generate(terms - 1, cascade, level3) + ")";
   }
-  else {return "(x)"}
+  else {return "(x)";}
 }
 
 function generate(terms=4, cascade=0.3, level3=false) {
@@ -14,7 +14,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
     * Level 3 controls whether Level 3 functions are used.
     */
   var func = "";
-  while ((Math.random() > (1/terms) || func == "") && func.length < 10*(terms*(1+Math.floor(level3)))/(1-cascade)) {
+  while ((Math.random() > (1/terms) || func == "") && func.length < (10*terms)/(1-cascade)) {
     //adds a coefficient
     var coefficient = Math.floor(chance.normal({mean: 1, dev: 3}));
     func += "(" + coefficient.toString() + ")*";
@@ -23,7 +23,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
     if (level3) {
       var options = ["poly", "exp", "log", "sin", "cos", "tan", "prod", "quot"];
       var weights = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 1];
-      rand = Math.random();
+      var rand = Math.random();
       for (var i=0; i < 11; i++) {
         if (weights[i] > rand) {
           var option = options[i];
@@ -31,7 +31,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
         }
       }
     }
-    else {var option = "poly"}
+    else {var option = "poly";}
     switch (option) {
       //polynomial
       case "poly":
@@ -49,14 +49,14 @@ function generate(terms=4, cascade=0.3, level3=false) {
         break;
       //product of two functions
       case "prod":
-        left = interior(terms, cascade, level3);
-        right = interior(terms, cascade, level3);
+        var left = interior(terms, cascade, level3);
+        var right = interior(terms, cascade, level3);
         func += left + "*" + right;
         break;
       //quotient of two functions
       case "quot":
-        left = interior(terms, cascade, level3);
-        right = interior(terms, cascade, level3);
+        var left = interior(terms, cascade, level3);
+        var right = interior(terms, cascade, level3);
         func += left + "/" + right;
         break;
     }
@@ -111,13 +111,17 @@ function checkAnswer(derivative) {
 }
 
 function submit() {
-	box = document.getElementById("answer");
-	answer = box.value;
-	correct = checkAnswer(answer);
+	var box = document.getElementById("answer");
+	var answer = box.value;
+	var output = document.getElementById("result");
+	var correct = checkAnswer(answer);
 	if (correct == true) {
-		alert("Correct!");
+		output.innerHTML = "Correct!";
 	}
-	else {alert("Incorrect! The derivative was: " + Algebrite.run("d(" + result + ")").toString())}
+	else {
+		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\)";
+		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	}
 	
 	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
 	box.value = "";
