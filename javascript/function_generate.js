@@ -104,6 +104,12 @@ function gen(difficulty) {
 	}
 	document.getElementById("latex").innerHTML = "\\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\)";
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	var box = document.getElementById("answer");
+	box.addEventListener("keydown", function (e) {
+		if (e.keyCode == 13) {
+			submit()
+		}
+	});
 }
 
 function checkAnswer(derivative) {
@@ -113,6 +119,7 @@ function checkAnswer(derivative) {
 function submit() {
 	var box = document.getElementById("answer");
 	var answer = box.value;
+	if (answer == "") {return}
 	var output = document.getElementById("result");
 	var correct = checkAnswer(answer);
 	if (correct == true) {
