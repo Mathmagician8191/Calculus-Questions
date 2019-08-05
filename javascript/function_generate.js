@@ -66,26 +66,31 @@ function generate(terms=4, cascade=0.3, level3=false) {
 }
 
 function gen(difficulty) {
+	var colour = document.body.style;
 	switch (difficulty) {
 		case "level2":
 			terms = 3;
 			cascade = 0.05;
 			level3 = false;
+			colour.background = "#99ffcc";
 			break;
 		case "easy":
 			terms = 3;
 			cascade = 0.1;
 			level3 = true;
+			colour.background = "#99ff99";
 			break;
 		case "medium":
 			terms = 4;
 			cascade = 0.25;
 			level3 = false;
+			colour.background = "#ffff00";
 			break;
 		case "hard":
 			terms = 5;
 			cascade = 0.4;
 			level3 = true;
+			colour.background = "#ff9900";
 			break;
 	}
 	document.getElementById("latex").innerHTML = "Loading...";
