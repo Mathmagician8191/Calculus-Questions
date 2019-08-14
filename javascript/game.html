@@ -3,16 +3,17 @@
 <head>
 	<title>Calculus questions</title>
 	<meta charset="UTF-8">
-	<script src="algebrite.js"></script>
-	<script src="chance.js"></script>
-	<script src="function_generate.js"></script>
+	<script src="https://chancejs.com/chance.min.js"></script>
 	<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<script src="algebrite.js"></script>
+	<script src="function_generate.js"></script>
 </head>
 <body onload="gen('level2')">
 	<p><u>Differentiate the equation:</u></p>
 	<div id="latex"></div>
 	<input type="text" id="answer" style="width: 300px">
 	<input type="button" value="Submit answer" onclick="submit()">
+	<input type="button" value="Preview" onclick="preview()">
 	<br>
 	<input type="radio" name="difficulty" value="level2" checked>Level 2<br>
 	<input type="radio" name="difficulty" value="easy">Level 3 Easy<br>
