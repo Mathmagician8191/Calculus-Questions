@@ -1,4 +1,8 @@
 var result;
+var terms;
+var cascade;
+var level3;
+
 
 function interior(terms, cascade, level3) {
   if (Math.random() < cascade && terms > 1) {
@@ -65,7 +69,8 @@ function generate(terms=4, cascade=0.3, level3=false) {
   return func.slice(0,-1);
 }
 
-function gen(difficulty) {
+function update() {
+	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
 	switch (difficulty) {
 		case "level2":
 			terms = 3;
@@ -88,6 +93,11 @@ function gen(difficulty) {
 			level3 = true;
 			break;
 	}
+	document.getElementById("result").innerHTML = ""
+	gen()
+}
+
+function gen() {
 	document.getElementById("latex").innerHTML = "Loading...";
 	result = "";
 	while (result == "") {
@@ -129,10 +139,8 @@ function submit() {
 		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\)";
 		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 	}
-	
-	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
 	box.value = "";
-	gen(difficulty);
+	gen();
 }
 
 generate();
