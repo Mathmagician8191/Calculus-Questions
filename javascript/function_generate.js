@@ -71,26 +71,31 @@ function generate(terms=4, cascade=0.3, level3=false) {
 
 function update() {
 	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
+  var colour = document.body.style;
 	switch (difficulty) {
 		case "level2":
 			terms = 3;
 			cascade = 0.05;
 			level3 = false;
+			colour.background = "#99ff99";
 			break;
 		case "easy":
 			terms = 3;
 			cascade = 0.1;
 			level3 = true;
+			colour.background = "#ffff99";
 			break;
 		case "medium":
 			terms = 4;
 			cascade = 0.25;
 			level3 = false;
+			colour.background = "#ffcc99";
 			break;
 		case "hard":
 			terms = 5;
 			cascade = 0.4;
 			level3 = true;
+			colour.background = "#ff9999";
 			break;
 	}
 	document.getElementById("result").innerHTML = ""
