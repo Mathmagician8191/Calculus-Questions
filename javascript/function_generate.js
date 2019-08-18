@@ -1,4 +1,8 @@
 var result;
+var terms;
+var cascade;
+var level3;
+
 
 function interior(terms, cascade, level3) {
   if (Math.random() < cascade && terms > 1) {
@@ -65,8 +69,9 @@ function generate(terms=4, cascade=0.3, level3=false) {
   return func.slice(0,-1);
 }
 
-function gen(difficulty) {
-	var colour = document.body.style;
+function update() {
+	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
+  var colour = document.body.style;
 	switch (difficulty) {
 		case "level2":
 			terms = 3;
@@ -93,6 +98,11 @@ function gen(difficulty) {
 			colour.background = "#ff9999";
 			break;
 	}
+	document.getElementById("result").innerHTML = ""
+	gen()
+}
+
+function gen() {
 	document.getElementById("latex").innerHTML = "Loading...";
 	result = "";
 	while (result == "") {
@@ -109,6 +119,12 @@ function gen(difficulty) {
 	}
 	document.getElementById("latex").innerHTML = "\\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\)";
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	var box = document.getElementById("answer");
+	box.addEventListener("keydown", function (e) {
+		if (e.keyCode == 13) {
+			submit()
+		}
+	});
 }
 
 function checkAnswer(derivative) {
@@ -118,6 +134,7 @@ function checkAnswer(derivative) {
 function submit() {
 	var box = document.getElementById("answer");
 	var answer = box.value;
+	if (answer == "") {return}
 	var output = document.getElementById("result");
 	var correct = checkAnswer(answer);
 	if (correct == true) {
@@ -127,10 +144,8 @@ function submit() {
 		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\)";
 		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 	}
-	
-	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
 	box.value = "";
-	gen(difficulty);
+	gen();
 }
 
 generate();
