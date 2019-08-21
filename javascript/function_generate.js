@@ -148,4 +148,12 @@ function submit() {
 	gen();
 }
 
+function preview() {
+	var box = document.getElementById("answer");
+	var answer = box.value;
+	var output = document.getElementById("result");
+	output.innerHTML = "\\(" + Algebrite.run("printlatex(" + answer + ")") + "\\)";
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+}
+
 generate();
