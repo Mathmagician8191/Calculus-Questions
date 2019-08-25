@@ -128,7 +128,7 @@ function gen() {
 }
 
 function checkAnswer(derivative) {
-	return Algebrite.simplify(derivative) == Algebrite.run("d(" + result + ")");
+	return Algebrite.simplify(derivative).toString() == Algebrite.simplify("d(" + result + ")").toString();
 }
 
 function submit() {
