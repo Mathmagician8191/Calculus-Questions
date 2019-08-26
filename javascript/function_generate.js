@@ -156,3 +156,8 @@ function preview() {
 }
 
 generate();
+
+document.addEventListener("DOMContentLoaded", function() {
+	table = document.getElementById("table")
+	renderMathInElement(table)
+})
