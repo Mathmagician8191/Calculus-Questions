@@ -9,10 +9,11 @@
 	<script src="algebrite.js"></script>
 	<script src="function_generate.js"></script>
 </head>
-<body>
+<body onload="update()">
 	<div class="row">
 		<div class="column">
-			<p>Note that this does not support reciprocal trig function (sec, cosec, cot)</p>
+			<p>Note that this does not support reciprocal trig functions (sec, cosec, cot)</p>
+ 			<p>Add multiplication signs between coefficient and term</p>
 			<input type="radio" name="difficulty" value="level2" checked>Level 2<br>
 			<input type="radio" name="difficulty" value="easy">Level 3 Easy<br>
 			<input type="radio" name="difficulty" value="medium">Level 3 Medium<br>
@@ -26,7 +27,6 @@
 			<input type="button" value="Preview" onclick="preview()">
 			<br>
 			<div id="result"></div>
-			<br>
 		</div>
 		<div class="column">
 			<h1>Functions and their derivatives</h1>

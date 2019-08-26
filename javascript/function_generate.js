@@ -128,7 +128,7 @@ function gen() {
 }
 
 function checkAnswer(derivative) {
-	return Algebrite.simplify(derivative) == Algebrite.run("d(" + result + ")");
+	return Algebrite.simplify(derivative).toString() == Algebrite.simplify("d(" + result + ")").toString();
 }
 
 function submit() {
@@ -141,7 +141,7 @@ function submit() {
 		output.innerHTML = "Correct!";
 	}
 	else {
-		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\)";
+		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";
 		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 	}
 	box.value = "";
