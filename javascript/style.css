@@ -4,3 +4,11 @@ table, th, td {
 	font-size: 24px;
 	padding: 8px;
 }
+
+.row {
+	display: flex;
+}
+
+.column {
+	flex: 50%;
+}
