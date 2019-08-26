@@ -3,26 +3,72 @@
 <head>
 	<title>Calculus questions</title>
 	<meta charset="UTF-8">
-  <script src="https://chancejs.com/chance.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://chancejs.com/chance.min.js"></script>
 	<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 	<script src="algebrite.js"></script>
 	<script src="function_generate.js"></script>
 </head>
 <body onload="update()">
-	<p>Note that this does not support reciprocal trig function (sec, cosec, cot)</p>
-	<p>Add multiplication signs between coefficient and term</p>
-	<input type="radio" name="difficulty" value="level2" checked>Level 2<br>
-	<input type="radio" name="difficulty" value="easy">Level 3 Easy<br>
-	<input type="radio" name="difficulty" value="medium">Level 3 Medium<br>
-	<input type="radio" name="difficulty" value="hard">Level 3 Hard<br>
-	<input type="button" value="Update difficulty" onclick="update()">
-	<br>
-	<p><u>Differentiate the equation:</u></p>
-	<div id="latex"></div>
-	<input type="text" id="answer" style="width: 300px">
-	<input type="button" value="Submit answer" onclick="submit()">
-  	<input type="button" value="Preview" onclick="preview()">
-	<br>
-	<div id="result"></div>
+	<div class="row">
+		<div class="column">
+			<p>Note that this does not support reciprocal trig functions (sec, cosec, cot)</p>
+ 			<p>Add multiplication signs between coefficient and term</p>
+			<input type="radio" name="difficulty" value="level2" checked>Level 2<br>
+			<input type="radio" name="difficulty" value="easy">Level 3 Easy<br>
+			<input type="radio" name="difficulty" value="medium">Level 3 Medium<br>
+			<input type="radio" name="difficulty" value="hard">Level 3 Hard<br>
+			<input type="button" value="Update difficulty" onclick="update()">
+			<br>
+			<p><u>Differentiate the equation:</u></p>
+			<div id="latex"></div>
+			<input type="text" id="answer" style="width: 300px">
+			<input type="button" value="Submit answer" onclick="submit()">
+			<input type="button" value="Preview" onclick="preview()">
+			<br>
+			<div id="result"></div>
+		</div>
+		<div class="column">
+			<h1>Functions and their derivatives</h1>
+			<table>
+				<tr>
+					<th>\(f(x)\)</th>
+					<th>\(f'(x)\)</th>
+				</tr>
+				<tr>
+					<td>\(ax^n\)</td>
+					<td>\(nax^{n-1}\)</td>
+				</tr>
+				<tr>
+					<td>\(ae^{nx}\)</td>
+					<td>\(nae^{nx}\)</td>
+				</tr>
+				<tr>
+					<td>\(ln(g(x))\)</td>
+					<td>\(\frac {g'(x)}{g(x)}\)</td>
+				</tr>
+				<tr>
+					<td>\(sin(x)\)</td>
+					<td>\(cos(x)\)</td>
+				</tr>
+				<tr>
+					<td>\(cos(x)\)</td>
+					<td>\(-sin(x)\)</td>
+				</tr>
+				<tr>
+					<td>\(tan(x)\)</td>
+					<td>\(\frac {1} {cos(x)^2}\)</td>
+				</tr>
+				<tr>
+					<td>\(g(h(x))\)</td>
+					<td>\(g'(h(x))h'(x)\)</td>
+				</tr>
+				<tr>
+					<td>\(g(x)h(x)\)</td>
+					<td>\(g'(x)h(x)+g(x)h'(x)\)</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </body>
 </html>
