@@ -116,8 +116,8 @@ function gen() {
 			console.log(err);
 		}
 	}
-	document.getElementById("latex").innerHTML = "\\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\)";
-	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	latex = document.getElementById("latex")
+	katex.render(Algebrite.run("printlatex(" + result + ")").toString(),latex, {throwOnError: false});
 	var box = document.getElementById("answer");
 	box.addEventListener("keydown", function (e) {
 		if (e.keyCode == 13) {
@@ -141,7 +141,7 @@ function submit() {
 	}
 	else {
 		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";
-		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+		renderMathInElement(output);
 	}
 	box.value = "";
 	gen();
@@ -151,8 +151,12 @@ function preview() {
 	var box = document.getElementById("answer");
 	var answer = box.value;
 	var output = document.getElementById("result");
-	output.innerHTML = "\\(" + Algebrite.run("printlatex(" + answer + ")") + "\\)";
-	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+	katex.render(Algebrite.run("printlatex(" + answer + ")"), output, {throwOnError: false});
 }
 
 generate();
+
+document.addEventListener("DOMContentLoaded", function() {
+	table = document.getElementById("table")
+	renderMathInElement(table)
+})
