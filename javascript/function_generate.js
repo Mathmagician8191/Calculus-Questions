@@ -1,16 +1,16 @@
 var result;
 var terms;
 var cascade;
-var level3;
+var level;
 
-function interior(terms, cascade, level3) {
+function interior(terms, cascade, level) {
 	if (Math.random() < cascade && terms > 1) {
-		return "(" + generate(terms - 1, cascade, level3) + ")";
+		return "(" + generate(terms - 1, cascade, level) + ")";
 	}
 	else {return "(x)";}
 }
 
-function generate(terms=4, cascade=0.3, level3=false) {
+function generate(terms=4, cascade=0.3, level=0) {
 	/** Generates a random function
 	* Terms influences the chance to add an extra term to a function
 	* Cascade is the chance to use a function as an argument
@@ -23,23 +23,38 @@ function generate(terms=4, cascade=0.3, level3=false) {
 		func += "(" + coefficient.toString() + ")*";
 		
 		//give options for functions
-		if (level3) {
-			var options = ["poly", "exp", "log", "sin", "cos", "tan", "prod", "quot"];
-			var weights = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 1];
-			var rand = Math.random();
-			for (var i=0; i < 11; i++) {
-				if (weights[i] > rand) {
-					var option = options[i];
-					break;
+		switch (level) {
+			case 2:
+				var options = ["poly", "exp", "log", "sin", "cos", "tan", "arcsin", "arctan", "prod", "quot"];
+				var weights = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1];
+				var rand = Math.random();
+				for (var i=0; i < 11; i++) {
+					if (weights[i] > rand) {
+						var option = options[i];
+						break;
+					}
 				}
-			}
+				break;
+			case 1:
+				var options = ["poly", "exp", "log", "sin", "cos", "tan", "prod", "quot"];
+				var weights = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 1];
+				var rand = Math.random();
+				for (var i=0; i < 11; i++) {
+					if (weights[i] > rand) {
+						var option = options[i];
+						break;
+					}
+				}
+				break;
+			case 0:
+				var option = "poly"
+				break;
 		}
-		else {var option = "poly";}
 		switch (option) {
 			//polynomial
 			case "poly":
 				var exponent = Math.floor(chance.normal({mean: 1.5, dev: 2}));
-				func += interior(terms, cascade, level3) + "^(" + exponent.toString() + ")";
+				func += interior(terms, cascade, level) + "^(" + exponent.toString() + ")";
 				break;
 			//miscellaneous functions
 			case "exp":
@@ -48,18 +63,20 @@ function generate(terms=4, cascade=0.3, level3=false) {
 			case "sin":
 			case "cos":
 			case "tan":
-				func += option + interior(terms, cascade, level3);
+			case "arcsin":
+			case "arctan":
+				func += option + interior(terms, cascade, level);
 				break;
 			//product of two functions
 			case "prod":
-				var left = interior(terms, cascade, level3);
-				var right = interior(terms, cascade, level3);
+				var left = interior(terms, cascade, level);
+				var right = interior(terms, cascade, level);
 				func += left + "*" + right;
 				break;
 			//quotient of two functions
 			case "quot":
-				var left = interior(terms, cascade, level3);
-				var right = interior(terms, cascade, level3);
+				var left = interior(terms, cascade, level);
+				var right = interior(terms, cascade, level);
 				func += left + "/" + right;
 				break;
 		}
@@ -75,26 +92,32 @@ function update() {
 		case "level2":
 			terms = 3;
 			cascade = 0.05;
-			level3 = false;
+			level = 0;
 			colour.background = "#99ff99";
 			break;
 		case "easy":
 			terms = 3;
 			cascade = 0.1;
-			level3 = true;
+			level = 1;
 			colour.background = "#ffff99";
 			break;
 		case "medium":
 			terms = 4;
 			cascade = 0.25;
-			level3 = false;
+			level = 1;
 			colour.background = "#ffcc99";
 			break;
 		case "hard":
 			terms = 5;
 			cascade = 0.4;
-			level3 = true;
+			level = 1;
 			colour.background = "#ff9999";
+			break;
+		case "first-year":
+			terms = 5;
+			cascade = 0.5;
+			level = 2;
+			colour.background = "#cc9999";
 			break;
 	}
 	document.getElementById("result").innerHTML = ""

@@ -3,7 +3,7 @@ function gen() {
 	result = "";
 	while (result == "") {
 		try {
-			result = Algebrite.simplify(generate(terms, cascade, level3)).toString();
+			result = Algebrite.simplify(generate(terms, cascade, level)).toString();
 			if (result == "" || !(result.includes("x"))) {
 				result = "";
 				throw "Not a valid equation";
