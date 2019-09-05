@@ -121,7 +121,7 @@ function gen() {
 	var box = document.getElementById("answer");
 	box.addEventListener("keydown", function (e) {
 		if (e.keyCode == 13) {
-			submit()
+			preview()
 		}
 	});
 }
