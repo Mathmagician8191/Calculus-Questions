@@ -2,6 +2,8 @@ var result;
 var terms;
 var cascade;
 var level3;
+var answer;
+var box;
 
 function interior(terms, cascade, level3) {
 	if (Math.random() < cascade && terms > 1) {
@@ -118,12 +120,6 @@ function gen() {
 	}
 	latex = document.getElementById("latex")
 	katex.render(Algebrite.run("printlatex(" + result + ")").toString(),latex, {throwOnError: false});
-	var box = document.getElementById("answer");
-	box.addEventListener("keydown", function (e) {
-		if (e.keyCode == 13) {
-			preview()
-		}
-	});
 }
 
 function checkAnswer(derivative) {
@@ -131,8 +127,7 @@ function checkAnswer(derivative) {
 }
 
 function submit() {
-	var box = document.getElementById("answer");
-	var answer = box.value;
+	answer = box.value;
 	if (answer == "") {return}
 	var output = document.getElementById("result");
 	var correct = checkAnswer(answer);
@@ -148,10 +143,17 @@ function submit() {
 }
 
 function preview() {
-	var box = document.getElementById("answer");
-	var answer = box.value;
+	answer = box.value;
 	var output = document.getElementById("result");
 	katex.render(Algebrite.run("printlatex(" + answer + ")"), output, {throwOnError: false});
+}
+
+function enter () {
+	//registers pressing enter
+	if (answer == box.value) {
+		submit();
+	}
+	else {preview()}
 }
 
 generate();
@@ -159,4 +161,10 @@ generate();
 document.addEventListener("DOMContentLoaded", function() {
 	table = document.getElementById("table")
 	renderMathInElement(table)
+	box = document.getElementById("answer");
+	box.addEventListener("keyup", function (e) {
+		if (e.keyCode == 13) {
+			enter()
+		}
+	});
 })
