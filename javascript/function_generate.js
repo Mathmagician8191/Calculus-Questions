@@ -2,6 +2,8 @@ var result;
 var terms;
 var cascade;
 var level3;
+var right = 0;
+var wrong = 0;
 
 function interior(terms, cascade, level3) {
 	if (Math.random() < cascade && terms > 1) {
@@ -69,6 +71,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
 }
 
 function update() {
+	//updates the difficulty
 	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
 	var colour = document.body.style;
 	switch (difficulty) {
@@ -98,10 +101,14 @@ function update() {
 			break;
 	}
 	document.getElementById("result").innerHTML = ""
+	right = 0
+	wrong = 0
+	score()
 	gen()
 }
 
 function gen() {
+	//ensures a correct function is generated
 	document.getElementById("latex").innerHTML = "Loading...";
 	result = "";
 	while (result == "") {
@@ -138,20 +145,30 @@ function submit() {
 	var correct = checkAnswer(answer);
 	if (correct == true) {
 		output.innerHTML = "Correct!";
+		right++;
 	}
 	else {
 		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";
 		renderMathInElement(output);
+		wrong++;
 	}
+	score()
 	box.value = "";
 	gen();
 }
 
 function preview() {
+	//previes user input
 	var box = document.getElementById("answer");
 	var answer = box.value;
 	var output = document.getElementById("result");
 	katex.render(Algebrite.run("printlatex(" + answer + ")"), output, {throwOnError: false});
+}
+
+function score() {
+	//update score
+	streak = document.getElementById("streak")
+	streak.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString()
 }
 
 generate();
