@@ -18,7 +18,7 @@ function gen() {
 	var box = document.getElementById("answer");
 	box.addEventListener("keydown", function (e) {
 		if (e.keyCode == 13) {
-			submit()
+			submit();
 		}
 	});
 }
@@ -35,11 +35,14 @@ function submit() {
 	var correct = checkAnswer(answer);
 	if (correct == true) {
 		output.innerHTML = "Correct!";
+		right++;
 	}
 	else {
 		output.innerHTML = "Incorrect! The integral was: \\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";
 		renderMathInElement(output);
+		wrong++;
 	}
+	score();
 	box.value = "";
 	gen();
 }

@@ -124,10 +124,10 @@ function update() {
 			break;
 	}
 	document.getElementById("result").innerHTML = ""
-	right = 0
-	wrong = 0
-	score()
-	gen()
+	right = 0;
+	wrong = 0;
+	score();
+	gen();
 }
 
 function preview() {
