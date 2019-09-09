@@ -2,6 +2,8 @@ var result;
 var terms;
 var cascade;
 var level;
+var right = 0;
+var wrong = 0;
 
 function interior(terms, cascade, level) {
 	if (Math.random() < cascade && terms > 1) {
@@ -86,6 +88,7 @@ function generate(terms=4, cascade=0.3, level=0) {
 }
 
 function update() {
+	//updates the difficulty
 	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
 	var colour = document.body.style;
 	switch (difficulty) {
@@ -121,14 +124,24 @@ function update() {
 			break;
 	}
 	document.getElementById("result").innerHTML = ""
+	right = 0
+	wrong = 0
+	score()
 	gen()
 }
 
 function preview() {
+	//previes user input
 	var box = document.getElementById("answer");
 	var answer = box.value;
 	var output = document.getElementById("result");
 	katex.render(Algebrite.run("printlatex(" + answer + ")"), output, {throwOnError: false});
+}
+
+function score() {
+	//update score
+	streak = document.getElementById("streak")
+	streak.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString()
 }
 
 generate();
