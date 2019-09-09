@@ -4,6 +4,7 @@ var cascade;
 var level3;
 var right = 0;
 var wrong = 0;
+var streak = 0;
 
 function interior(terms, cascade, level3) {
 	if (Math.random() < cascade && terms > 1) {
@@ -101,10 +102,11 @@ function update() {
 			break;
 	}
 	document.getElementById("result").innerHTML = ""
-	right = 0
-	wrong = 0
-	score()
-	gen()
+	right = 0;
+	wrong = 0;
+	streak = 0;
+	score();
+	gen();
 }
 
 function gen() {
@@ -146,11 +148,13 @@ function submit() {
 	if (correct == true) {
 		output.innerHTML = "Correct!";
 		right++;
+		streak++;
 	}
 	else {
 		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";
 		renderMathInElement(output);
 		wrong++;
+		streak = 0;
 	}
 	score()
 	box.value = "";
@@ -167,8 +171,8 @@ function preview() {
 
 function score() {
 	//update score
-	streak = document.getElementById("streak")
-	streak.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString()
+	streakOutput = document.getElementById("streak")
+	streakOutput.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString() + " Streak: " + streak.toString();
 }
 
 generate();
