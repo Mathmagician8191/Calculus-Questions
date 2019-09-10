@@ -21,7 +21,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
 	* Level 3 controls whether Level 3 functions are used.
 	*/
 	var func = "";
-	while ((Math.random() > (1/terms) || func == "") && func.length < (10*terms)/(1-cascade)) {
+	while ((Math.random() > (1/terms) || func.length < (3*terms)/(1-cascade)) && func.length < (10*terms)/(1-cascade)) {
 		//adds a coefficient
 		var coefficient = Math.floor(chance.normal({mean: 1, dev: 3}));
 		func += "(" + coefficient.toString() + ")*";
