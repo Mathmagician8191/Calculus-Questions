@@ -2,6 +2,8 @@ var result;
 var terms;
 var cascade;
 var level;
+var answer;
+var box;
 var right = 0;
 var wrong = 0;
 
@@ -131,11 +133,18 @@ function update() {
 }
 
 function preview() {
-	//previes user input
-	var box = document.getElementById("answer");
-	var answer = box.value;
+	//previews user function
+	answer = box.value;
 	var output = document.getElementById("result");
 	katex.render(Algebrite.run("printlatex(" + answer + ")"), output, {throwOnError: false});
+}
+
+function enter () {
+	//registers pressing enter
+	if (answer == box.value) {
+		submit();
+	}
+	else {preview()}
 }
 
 function score() {
@@ -149,4 +158,10 @@ generate();
 document.addEventListener("DOMContentLoaded", function() {
 	table = document.getElementById("table")
 	renderMathInElement(table)
+	box = document.getElementById("answer");
+	box.addEventListener("keyup", function (e) {
+		if (e.keyCode == 13) {
+			enter()
+		}
+	});
 })
