@@ -29,8 +29,8 @@ function generate(terms=4, cascade=0.3, level=0) {
 		//give options for functions
 		switch (level) {
 			case 2:
-				var options = ["poly", "exp", "log", "sin", "cos", "tan", "arcsin", "arctan", "prod", "quot"];
-				var weights = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1];
+				var options = ["poly", "exp", "log", "sin", "cos", "tan", "sinh", "cosh", "tanh", "arcsin", "arctan", "prod", "quot"];
+				var weights = [0.275, 0.375, 0.475, 0.575, 0.675, 0.775, 0.8, 0.825, 0.85, 0.875, 0.9, 0.95, 1];
 				var rand = Math.random();
 				for (var i=0; i < 11; i++) {
 					if (weights[i] > rand) {
@@ -67,6 +67,9 @@ function generate(terms=4, cascade=0.3, level=0) {
 			case "sin":
 			case "cos":
 			case "tan":
+			case "sinh":
+			case "cosh":
+			case "tanh":
 			case "arcsin":
 			case "arctan":
 				func += option + interior(terms, cascade, level);
