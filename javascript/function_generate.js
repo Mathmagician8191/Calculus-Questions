@@ -27,32 +27,29 @@ function generate(terms=4, cascade=0.3, level=0) {
 		func += "(" + coefficient.toString() + ")*";
 		
 		//give options for functions
+		var options;
+		var weights;
 		switch (level) {
 			case 2:
-				var options = ["poly", "exp", "log", "sin", "cos", "tan", "sinh", "cosh", "tanh", "arcsin", "arctan", "prod", "quot"];
-				var weights = [0.275, 0.375, 0.475, 0.575, 0.675, 0.775, 0.8, 0.825, 0.85, 0.875, 0.9, 0.95, 1];
-				var rand = Math.random();
-				for (var i=0; i < 11; i++) {
-					if (weights[i] > rand) {
-						var option = options[i];
-						break;
-					}
-				}
+				options = ["poly", "exp", "log", "sin", "cos", "tan", "sinh", "cosh", "tanh", "arcsin", "arctan", "prod", "quot"];
+				weights = [0.275, 0.375, 0.475, 0.575, 0.675, 0.775, 0.8, 0.825, 0.85, 0.875, 0.9, 0.95, 1];
 				break;
 			case 1:
-				var options = ["poly", "exp", "log", "sin", "cos", "tan", "prod", "quot"];
-				var weights = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 1];
-				var rand = Math.random();
-				for (var i=0; i < 11; i++) {
-					if (weights[i] > rand) {
-						var option = options[i];
-						break;
-					}
-				}
+				options = ["poly", "exp", "log", "sin", "cos", "tan", "prod", "quot"];
+				weights = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 1];
 				break;
 			case 0:
-				var option = "poly"
+				options = ["poly"];
+				weights = [1];
 				break;
+		}
+		var rand = Math.random();
+		var numOptions = weights.length;
+		for (var i=0; i < numOptions; i++) {
+			if (weights[i] > rand) {
+				var option = options[i];
+				break;
+			}
 		}
 		switch (option) {
 			//polynomial
@@ -86,6 +83,9 @@ function generate(terms=4, cascade=0.3, level=0) {
 				var right = interior(terms, cascade, level);
 				func += left + "/" + right;
 				break;
+			default:
+				console.log("Error! Could be cause of bug!")
+				console.log(option)
 		}
 		func += "+";
 	}
