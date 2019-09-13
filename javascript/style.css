@@ -5,6 +5,14 @@ table, th, td {
 	background-color: #3f6dcf;
 }
 
+input[type=button] {
+	background-color: #3f6dcf;
+	border-radius: 2px;
+	border: none;
+	padding: 4px;
+	font-size: 16px;
+}
+
 h1 {
 	font-size: 24px;
 	text-decoration: underline;
