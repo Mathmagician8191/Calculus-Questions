@@ -81,25 +81,25 @@ function update() {
 			terms = 3;
 			cascade = 0.05;
 			level3 = false;
-			colour.background = "#99ff99";
+			colour.background = "#e6ffcc";
 			break;
 		case "easy":
 			terms = 3;
 			cascade = 0.1;
 			level3 = true;
-			colour.background = "#ffff99";
+			colour.background = "#ffffcc";
 			break;
 		case "medium":
 			terms = 4;
 			cascade = 0.25;
 			level3 = false;
-			colour.background = "#ffcc99";
+			colour.background = "#ffddcc";
 			break;
 		case "hard":
 			terms = 5;
 			cascade = 0.4;
 			level3 = true;
-			colour.background = "#ff9999";
+			colour.background = "#ffcccc";
 			break;
 	}
 	document.getElementById("result").innerHTML = ""
