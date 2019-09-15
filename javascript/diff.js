@@ -36,11 +36,13 @@ function submit() {
 	if (correct == true) {
 		output.innerHTML = "Correct!";
 		right++;
+		streak++;
 	}
 	else {
 		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";
 		renderMathInElement(output);
 		wrong++;
+		streak = 0;
 	}
 	score();
 	box.value = "";
