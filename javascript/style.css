@@ -30,3 +30,7 @@ div {
 .column {
 	flex: 50%;
 }
+
+.warning {
+	color: #ff0000;
+}

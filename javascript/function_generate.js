@@ -111,51 +111,6 @@ function update() {
 	gen();
 }
 
-function gen() {
-	//ensures a correct function is generated
-	document.getElementById("latex").innerHTML = "Loading...";
-	result = "";
-	while (result == "") {
-		try {
-			result = Algebrite.simplify(generate(terms, cascade, level3)).toString();
-			if (result == "" || !(result.includes("x"))) {
-				result = "";
-				throw "Not a valid equation";
-			}
-		}
-		catch (err) {
-			console.log(err);
-		}
-	}
-	latex = document.getElementById("latex")
-	katex.render(Algebrite.run("printlatex(" + result + ")").toString(),latex, {throwOnError: false});
-}
-
-function checkAnswer(derivative) {
-	return Algebrite.simplify(derivative).toString() == Algebrite.simplify("d(" + result + ")").toString();
-}
-
-function submit() {
-	answer = box.value;
-	if (answer == "") {return}
-	var output = document.getElementById("result");
-	var correct = checkAnswer(answer);
-	if (correct == true) {
-		output.innerHTML = "Correct!";
-		right++;
-		streak++;
-	}
-	else {
-		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";
-		renderMathInElement(output);
-		wrong++;
-		streak = 0;
-	}
-	score()
-	box.value = "";
-	gen();
-}
-
 function preview() {
 	//previews user function
 	answer = box.value;
