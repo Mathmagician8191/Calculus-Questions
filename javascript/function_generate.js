@@ -6,6 +6,7 @@ var answer;
 var box;
 var right = 0;
 var wrong = 0;
+var streak = 0;
 
 function interior(terms, cascade, level) {
 	if (Math.random() < cascade && terms > 1) {
@@ -131,6 +132,7 @@ function update() {
 	document.getElementById("result").innerHTML = ""
 	right = 0;
 	wrong = 0;
+	streak = 0;
 	score();
 	gen();
 }
@@ -152,8 +154,8 @@ function enter () {
 
 function score() {
 	//update score
-	streak = document.getElementById("streak")
-	streak.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString()
+	streakOutput = document.getElementById("streak")
+	streakOutput.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString() + " Streak: " + streak.toString();
 }
 
 generate();
