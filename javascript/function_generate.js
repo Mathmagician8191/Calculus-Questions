@@ -6,6 +6,7 @@ var answer;
 var box;
 var right = 0;
 var wrong = 0;
+var streak = 0;
 
 function interior(terms, cascade, level3) {
 	if (Math.random() < cascade && terms > 1) {
@@ -81,74 +82,32 @@ function update() {
 			terms = 3;
 			cascade = 0.05;
 			level3 = false;
-			colour.background = "#99ff99";
+			colour.background = "#e6ffcc";
 			break;
 		case "easy":
 			terms = 3;
 			cascade = 0.1;
 			level3 = true;
-			colour.background = "#ffff99";
+			colour.background = "#ffffcc";
 			break;
 		case "medium":
 			terms = 4;
 			cascade = 0.25;
 			level3 = false;
-			colour.background = "#ffcc99";
+			colour.background = "#ffddcc";
 			break;
 		case "hard":
 			terms = 5;
 			cascade = 0.4;
 			level3 = true;
-			colour.background = "#ff9999";
+			colour.background = "#ffcccc";
 			break;
 	}
 	document.getElementById("result").innerHTML = ""
-	right = 0
-	wrong = 0
-	score()
-	gen()
-}
-
-function gen() {
-	//ensures a correct function is generated
-	document.getElementById("latex").innerHTML = "Loading...";
-	result = "";
-	while (result == "") {
-		try {
-			result = Algebrite.simplify(generate(terms, cascade, level3)).toString();
-			if (result == "" || !(result.includes("x")) || result.includes("i")) {
-				result = "";
-				throw "Not a valid equation";
-			}
-		}
-		catch (err) {
-			console.log(err);
-		}
-	}
-	latex = document.getElementById("latex")
-	katex.render(Algebrite.run("printlatex(" + result + ")").toString(),latex, {throwOnError: false});
-}
-
-function checkAnswer(derivative) {
-	return Algebrite.simplify(derivative).toString() == Algebrite.simplify("d(" + result + ")").toString();
-}
-
-function submit() {
-	answer = box.value;
-	if (answer == "") {return}
-	var output = document.getElementById("result");
-	var correct = checkAnswer(answer);
-	if (correct == true) {
-		output.innerHTML = "Correct!";
-		right++;
-	}
-	else {
-		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";
-		renderMathInElement(output);
-		wrong++;
-	}
-	score()
-	box.value = "";
+	right = 0;
+	wrong = 0;
+	streak = 0;
+	score();
 	gen();
 }
 
@@ -169,8 +128,8 @@ function enter () {
 
 function score() {
 	//update score
-	streak = document.getElementById("streak")
-	streak.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString()
+	streakOutput = document.getElementById("streak")
+	streakOutput.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString() + " Streak: " + streak.toString();
 }
 
 generate();

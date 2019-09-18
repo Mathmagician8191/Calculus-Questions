@@ -1,9 +1,26 @@
 table, th, td {
 	border: 1px solid #000000;
 	border-collapse: collapse;
-	font-size: 24px;
-	padding: 8px;
+	padding: 6px;
 	background-color: #3f6dcf;
+}
+
+input[type=button] {
+	background-color: #3f6dcf;
+	border-radius: 2px;
+	border: none;
+	padding: 4px;
+	font-size: 16px;
+}
+
+h1 {
+	font-size: 24px;
+	text-decoration: underline;
+}
+
+div {
+	font-size: 18px;
+	font-family: Calibri;
 }
 
 .row {
@@ -12,4 +29,8 @@ table, th, td {
 
 .column {
 	flex: 50%;
+}
+
+.warning {
+	color: #ff0000;
 }
