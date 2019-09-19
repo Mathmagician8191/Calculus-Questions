@@ -15,12 +15,6 @@ function gen() {
 	}
 	latex = document.getElementById("latex")
 	katex.render(Algebrite.run("printlatex(d(" + result + "))").toString(),latex, {throwOnError: false});
-	var box = document.getElementById("answer");
-	box.addEventListener("keydown", function (e) {
-		if (e.keyCode == 13) {
-			submit()
-		}
-	});
 }
 
 function checkAnswer(integral) {
@@ -29,7 +23,7 @@ function checkAnswer(integral) {
 
 function submit() {
 	var box = document.getElementById("answer");
-	var answer = box.value;
+	answer = box.value;
 	if (answer == "") {return}
 	var output = document.getElementById("result");
 	var correct = checkAnswer(answer);
@@ -37,6 +31,9 @@ function submit() {
 		output.innerHTML = "Correct!";
 		right++;
 		streak++;
+		if (streak > highestStreak) {
+			highestStreak = streak;
+		}
 	}
 	else {
 		output.innerHTML = "Incorrect! The integral was: \\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";

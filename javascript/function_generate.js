@@ -7,6 +7,7 @@ var box;
 var right = 0;
 var wrong = 0;
 var streak = 0;
+var highestStreak = 0;
 
 function interior(terms, cascade, level3) {
 	if (Math.random() < cascade && terms > 1) {
@@ -107,6 +108,7 @@ function update() {
 	right = 0;
 	wrong = 0;
 	streak = 0;
+	highestStreak = 0;
 	score();
 	gen();
 }
@@ -129,16 +131,17 @@ function enter () {
 function score() {
 	//update score
 	streakOutput = document.getElementById("streak")
-	streakOutput.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString() + " Streak: " + streak.toString();
+	streakOutput.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString() + " Streak: " + streak.toString() + " Record:" + highestStreak.toString();
 }
 
 generate();
 
 document.addEventListener("DOMContentLoaded", function() {
+	//stuff to do once page has loaded properly (DOM-related)
 	table = document.getElementById("table")
 	renderMathInElement(table)
 	box = document.getElementById("answer");
-	box.addEventListener("keyup", function (e) {
+	box.addEventListener("keydown", function (e) {
 		if (e.keyCode == 13) {
 			enter()
 		}
