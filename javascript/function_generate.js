@@ -43,7 +43,10 @@ function generate(terms=4, cascade=0.3, level3=false) {
 		switch (option) {
 			//polynomial
 			case "poly":
-				var exponent = Math.floor(chance.normal({mean: 1.5, dev: 2}));
+				do {
+					var exponent = Math.floor(chance.normal({mean: 1.5, dev: 2}));
+				}
+				while (exponent < 0 && level3 == false)
 				func += interior(terms, cascade, level3) + "^(" + exponent.toString() + ")";
 				break;
 			//miscellaneous functions
@@ -80,7 +83,7 @@ function update() {
 	switch (difficulty) {
 		case "level2":
 			terms = 3;
-			cascade = 0.05;
+			cascade = 0;
 			level3 = false;
 			colour.background = "#e6ffcc";
 			break;
