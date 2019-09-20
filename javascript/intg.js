@@ -1,3 +1,5 @@
+var type = "intg"
+
 function gen() {
 	document.getElementById("latex").innerHTML = "Loading...";
 	result = "";
@@ -31,8 +33,9 @@ function submit() {
 		output.innerHTML = "Correct!";
 		right++;
 		streak++;
-		if (streak > highestStreak) {
-			highestStreak = streak;
+		if (streak > streakRecord.intg[difficulty]) {
+			streakRecord.intg[difficulty] = streak
+			localStorage.streak = JSON.parse(streakRecord);
 		}
 	}
 	else {
