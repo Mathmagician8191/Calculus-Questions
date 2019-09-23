@@ -35,7 +35,7 @@ function submit() {
 		streak++;
 		if (streak > streakRecord.intg[difficulty]) {
 			streakRecord.intg[difficulty] = streak
-			localStorage.streak = JSON.parse(streakRecord);
+			localStorage.streak = JSON.stringify(streakRecord);
 		}
 	}
 	else {
