@@ -1,3 +1,5 @@
+var type = "diff"
+
 function gen() {
 	document.getElementById("latex").innerHTML = "Loading...";
 	result = "";
@@ -37,6 +39,10 @@ function submit() {
 		output.innerHTML = "Correct!";
 		right++;
 		streak++;
+    if (streak > streakRecord.diff[difficulty]) {
+			streakRecord.diff[difficulty] = streak;
+			localStorage.streak = JSON.stringify(streakRecord);
+		}
 	}
 	else {
 		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";

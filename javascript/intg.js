@@ -1,3 +1,5 @@
+var type = "intg"
+
 function gen() {
 	document.getElementById("latex").innerHTML = "Loading...";
 	result = "";
@@ -37,6 +39,10 @@ function submit() {
 		output.innerHTML = "Correct!";
 		right++;
 		streak++;
+    if (streak > streakRecord.intg[difficulty]) {
+			streakRecord.intg[difficulty] = streak;
+			localStorage.streak = JSON.stringify(streakRecord);
+		}
 	}
 	else {
 		output.innerHTML = "Incorrect! The integral was: \\(" + Algebrite.run("printlatex(" + result + ")").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";
