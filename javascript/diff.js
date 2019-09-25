@@ -1,3 +1,5 @@
+var type = "diff"
+
 function gen() {
 	document.getElementById("latex").innerHTML = "Loading...";
 	result = "";
@@ -15,12 +17,6 @@ function gen() {
 	}
 	latex = document.getElementById("latex")
 	katex.render(Algebrite.run("printlatex(" + result + ")").toString(),latex, {throwOnError: false});
-	var box = document.getElementById("answer");
-	box.addEventListener("keydown", function (e) {
-		if (e.keyCode == 13) {
-			submit()
-		}
-	});
 }
 
 function checkAnswer(derivative) {
@@ -29,7 +25,7 @@ function checkAnswer(derivative) {
 
 function submit() {
 	var box = document.getElementById("answer");
-	var answer = box.value;
+	answer = box.value;
 	if (answer == "") {return}
 	var output = document.getElementById("result");
 	var correct = checkAnswer(answer);
@@ -37,6 +33,10 @@ function submit() {
 		output.innerHTML = "Correct!";
 		right++;
 		streak++;
+		if (streak > streakRecord.diff[difficulty]) {
+			streakRecord.diff[difficulty] = streak
+			localStorage.streak = JSON.stringify(streakRecord);
+		}
 	}
 	else {
 		output.innerHTML = "Incorrect! The derivative was: \\(" + Algebrite.run("printlatex(d(" + result + "))").toString() + "\\) not \\(" + Algebrite.run("printlatex(" + answer + ")").toString() + "\\)";

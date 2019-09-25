@@ -4,9 +4,28 @@ var cascade;
 var level3;
 var answer;
 var box;
+var difficulty;
 var right = 0;
 var wrong = 0;
 var streak = 0;
+
+if (!localStorage.streak) {
+	localStorage.streak = JSON.stringify({
+		diff: {
+			level2: 0,
+			easy: 0,
+			medium: 0,
+			hard: 0
+		},
+		intg: {
+			level2: 0,
+			easy: 0,
+			medium: 0,
+			hard: 0
+		}
+	});
+}
+var streakRecord = JSON.parse(localStorage.streak)
 
 function interior(terms, cascade, level3) {
 	if (Math.random() < cascade && terms > 1) {
@@ -75,7 +94,7 @@ function generate(terms=4, cascade=0.3, level3=false) {
 
 function update() {
 	//updates the difficulty
-	var difficulty = document.querySelector('input[name=difficulty]:checked').value;
+	difficulty = document.querySelector('input[name=difficulty]:checked').value;
 	var colour = document.body.style;
 	switch (difficulty) {
 		case "level2":
@@ -129,16 +148,17 @@ function enter () {
 function score() {
 	//update score
 	streakOutput = document.getElementById("streak")
-	streakOutput.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString() + " Streak: " + streak.toString();
+	streakOutput.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString() + " Streak: " + streak.toString() + " Record: " + streakRecord[type][difficulty].toString();
 }
 
 generate();
 
 document.addEventListener("DOMContentLoaded", function() {
+	//stuff to do once page has loaded properly (DOM-related)
 	table = document.getElementById("table")
 	renderMathInElement(table)
 	box = document.getElementById("answer");
-	box.addEventListener("keyup", function (e) {
+	box.addEventListener("keydown", function (e) {
 		if (e.keyCode == 13) {
 			enter()
 		}
