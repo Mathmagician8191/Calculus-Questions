@@ -41,7 +41,7 @@ function generate(terms=4, cascade=0.3, level=0) {
 	* Level 3 controls whether Level 3 functions are used.
 	*/
 	var func = "";
-	while ((Math.random() > (1/terms) || func == "") && func.length < (10*terms)/(1-cascade)) {
+	while ((Math.random() > (1/terms) || func.length < (3*terms)/(1-cascade)) && func.length < (6*terms)/(1-cascade)) {
 		//adds a coefficient
 		var coefficient = Math.floor(chance.normal({mean: 1, dev: 3}));
 		func += "(" + coefficient.toString() + ")*";
@@ -74,7 +74,10 @@ function generate(terms=4, cascade=0.3, level=0) {
 		switch (option) {
 			//polynomial
 			case "poly":
-				var exponent = Math.floor(chance.normal({mean: 1.5, dev: 2}));
+				do {
+					var exponent = Math.floor(chance.normal({mean: 1.5, dev: 2}));
+				}
+				while (exponent < 0 && level3 == false)
 				func += interior(terms, cascade, level) + "^(" + exponent.toString() + ")";
 				break;
 			//miscellaneous functions
@@ -119,7 +122,7 @@ function update() {
 	switch (difficulty) {
 		case "level2":
 			terms = 3;
-			cascade = 0.05;
+			cascade = 0;
 			level = 0;
 			colour.background = "#e6ffcc";
 			break;

@@ -1,4 +1,4 @@
-var type = "diff"
+var type = "diff";
 
 function gen() {
 	document.getElementById("latex").innerHTML = "Loading...";
@@ -6,7 +6,7 @@ function gen() {
 	while (result == "") {
 		try {
 			result = Algebrite.simplify(generate(terms, cascade, level)).toString();
-			if (result == "" || !(result.includes("x"))) {
+			if (result == "" || !(result.includes("x")) || (result.includes("i") && level < 2)) {
 				result = "";
 				throw "Not a valid equation";
 			}
