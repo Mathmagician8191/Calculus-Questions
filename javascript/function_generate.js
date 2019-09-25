@@ -148,7 +148,7 @@ function enter () {
 function score() {
 	//update score
 	streakOutput = document.getElementById("streak")
-	streakOutput.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString() + " Streak: " + streak.toString() + " Record:" + streakRecord[type][difficulty].toString();
+	streakOutput.innerHTML = "Correct: " + right.toString() + " Wrong: " + wrong.toString() + " Streak: " + streak.toString() + " Record: " + streakRecord[type][difficulty].toString();
 }
 
 generate();
