@@ -6,7 +6,7 @@ function gen() {
 	while (result == "") {
 		try {
 			result = Algebrite.simplify(generate(terms, cascade, level3)).toString();
-			if (result == "" || !(result.includes("x"))) {
+			if (result == "" || !(result.includes("x")) || result.includes("i")) {
 				result = "";
 				throw "Not a valid equation";
 			}
