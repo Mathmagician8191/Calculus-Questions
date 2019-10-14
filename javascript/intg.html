@@ -23,11 +23,12 @@
 			<input type="radio" name="difficulty" value="easy">Level 3 Easy<br>
 			<input type="radio" name="difficulty" value="medium">Level 3 Medium<br>
 			<input type="radio" name="difficulty" value="hard">Level 3 Hard<br>
+			<input type="radio" name="difficulty" value="first-year">First Year<br>
 			<input type="button" value="Update difficulty" onclick="update()">
 			<br>
 			<p><u>Integrate the expression:</u></p>
 			<div id="latex"></div>
-			<input type="text" id="answer" style="width: 300px">
+			<input type="text" id="answer" style="width: 500px">
 			<input type="button" value="Submit answer" onclick="submit()">
 			<input type="button" value="Preview" onclick="preview()">
 			<br>
@@ -74,6 +75,26 @@
 				<tr>
 					<td>\(g'(x)h(x)\)</td>
 					<td>\(g(x)h(x) - \int g(x)h'(x)\)</td>
+				</tr>
+				<tr>
+					<td>\(\frac {1} {sqrt(1-x^2)}\)</td>
+					<td>\(arcsin(x)\)</td>
+				</tr>
+				<tr>
+					<td>\(\frac {1} {1+x^2}\)</td>
+					<td>\(arctan(x)\)</td>
+				</tr>
+				<tr>
+					<td>\(cosh(x)\)</td>
+					<td>\(sinh(x)\)</td>
+				</tr>
+				<tr>
+					<td>\(sinh(x)\)</td>
+					<td>\(cosh(x)\)</td>
+				</tr>
+				<tr>
+					<td>\(\frac {1} {cosh(x)^2}\)</td>
+					<td>\(tanh(x)\)</td>
 				</tr>
 			</table>
 		</div>

@@ -1,12 +1,12 @@
-var type = "diff"
+var type = "diff";
 
 function gen() {
 	document.getElementById("latex").innerHTML = "Loading...";
 	result = "";
 	while (result == "") {
 		try {
-			result = Algebrite.simplify(generate(terms, cascade, level3)).toString();
-			if (result == "" || !(result.includes("x")) || result.includes("i")) {
+			result = Algebrite.simplify(generate(terms, cascade, level)).toString();
+			if (result == "" || !(result.includes("x")) || (result.includes("i") && level < 2)) {
 				result = "";
 				throw "Not a valid equation";
 			}
@@ -17,6 +17,12 @@ function gen() {
 	}
 	latex = document.getElementById("latex")
 	katex.render(Algebrite.run("printlatex(" + result + ")").toString(),latex, {throwOnError: false});
+	var box = document.getElementById("answer");
+	box.addEventListener("keydown", function (e) {
+		if (e.keyCode == 13) {
+			submit();
+		}
+	});
 }
 
 function checkAnswer(derivative) {
@@ -25,7 +31,7 @@ function checkAnswer(derivative) {
 
 function submit() {
 	var box = document.getElementById("answer");
-	answer = box.value;
+	var answer = box.value;
 	if (answer == "") {return}
 	var output = document.getElementById("result");
 	var correct = checkAnswer(answer);
@@ -33,8 +39,8 @@ function submit() {
 		output.innerHTML = "Correct!";
 		right++;
 		streak++;
-		if (streak > streakRecord.diff[difficulty]) {
-			streakRecord.diff[difficulty] = streak
+    if (streak > streakRecord.diff[difficulty]) {
+			streakRecord.diff[difficulty] = streak;
 			localStorage.streak = JSON.stringify(streakRecord);
 		}
 	}
